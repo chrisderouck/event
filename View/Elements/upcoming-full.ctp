@@ -5,42 +5,44 @@ if (count($events) > 0): ?>
     <div id="kalender">
         <h2><?=__('Quick Calendar')?></h2>
 
-    <?php foreach($events as $event): ?>
-        <article class="calItem">
-            <a href="<?=$this->Html->url($event['Node']['path'])?>">
-                <header class="calItemTitle"><?=$event['Node']['title']?></header>
-                <div class="calItemDate"><?=$this->Time->i18nFormat($event['Event']['start_date'], Configure::read('Event.date_time_format'))?></div>
+        <?php foreach($events as $event): ?>
+            <article class="calItem">
+                <a href="<?=$this->Html->url($event['Node']['path'])?>">
+                    <header class="calItemTitle"><?=$event['Node']['title']?></header>
+                    <div class="calItemDate"><?=$this->Time->i18nFormat($event['Event']['start_date'], Configure::read('Event.date_time_format'))?></div>
 
-                <div class="calItemImg">
-                <?php if(isset($event['LinkedAssets']) && isset($event['LinkedAssets']['FeaturedImage'])): ?>
-                    <?=$this->Html->image(str_replace('\\','/',$event['LinkedAssets']['FeaturedImage']['path']))?>
-                <?php else: ?>
-                    <?php echo $this->Html->image('default.jpg', $options = array('alt' => 'Default Calendar Image')); ?>
-                <?php endif; ?>
-                </div>
-
-                <div class="calItemInfo">
-                    <div class="calItemInfoOrg"><?=$event['Event']['organiser']?></div>
-                    <div class="calItemInfoTags">
-                        <?php if(isset($event['Taxonomy']) && count($event['Taxonomy']) > 0): ?>
-                            <?php foreach($event['Taxonomy'] as $taxo): ?>
-                                <?=$this->Html->link($taxo['Term']['title'], array(
-                                    'admin' => false,
-                                    'plugin' => 'nodes',
-                                    'controller' => 'nodes',
-                                    'action' => 'term',
-                                    'type' => $taxo['Vocabulary']['alias'],
-                                    'slug' => $taxo['Term']['slug']
-                                ));?>
-                            <?php endforeach; ?>
+                    <div class="calItemImg">
+                        <?php if(isset($event['LinkedAssets']) && isset($event['LinkedAssets']['FeaturedImage'])): ?>
+                            <?=$this->Html->image(str_replace('\\','/',$event['LinkedAssets']['FeaturedImage']['path']))?>
+                        <?php else: ?>
+                            <?php echo $this->Html->image('default.jpg', $options = array('alt' => 'Default Calendar Image')); ?>
                         <?php endif; ?>
                     </div>
-                </div>
-            </a>
-        </article>
-    <?php endforeach; ?>
 
-        <a href="#" class="btn"><span></span><?=('Full Calendar')?></a>
+                    <div class="calItemInfo">
+                        <?php if (isset($event['Event']['organiser'])): ?>
+                            <div class="calItemInfoOrg"><?=$event['Event']['organiser']?></div>
+                        <?php endif; ?>
+                        <div class="calItemInfoTags">
+                            <?php if(isset($event['Taxonomy']) && count($event['Taxonomy']) > 0): ?>
+                                <?php foreach($event['Taxonomy'] as $taxo): ?>
+                                    <?=$this->Html->link($taxo['Term']['title'], array(
+                                        'admin' => false,
+                                        'plugin' => 'nodes',
+                                        'controller' => 'nodes',
+                                        'action' => 'term',
+                                        'type' => $taxo['Vocabulary']['alias'],
+                                        'slug' => $taxo['Term']['slug']
+                                    ));?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </a>
+            </article>
+        <?php endforeach; ?>
+
+        <?=$this->Html->link(__('Full Calendar'), array('plugin'=>'event', 'controller'=>'events', 'action' => 'overview'), array('class' => 'button'))?>
         <div class="cleaner"></div>
     </div>
 <?php endif; ?>

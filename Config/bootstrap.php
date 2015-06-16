@@ -2,13 +2,14 @@
 /**
  * Routes
  *
- * example_routes.php will be loaded in main app/config/routes.php file.
+ * routes.php will be loaded in main app/config/routes.php file.
  */
 	Croogo::hookRoutes('Event');
+
 /**
  * Behavior
  *
- * This plugin's Example behavior will be attached whenever Node model is loaded.
+ * This plugin's EventBehavior will be attached whenever Node model is loaded.
  */
 	Croogo::hookBehavior('Node', 'Event.Event', array());
 	Croogo::hookModelProperty('Node', 'hasOne', array('Event'));
@@ -16,13 +17,13 @@
 /**
  * Component
  *
- * This plugin's Example component will be loaded in ALL controllers.
+ * This plugin's EventComponent will be loaded in Nodes controllers.
  */
 	Croogo::hookComponent('Nodes', 'Event.Event');
 /**
  * Helper
  *
- * This plugin's Example helper will be loaded via NodesController.
+ * This plugin's EventHelper will be loaded via NodesController.
  */
 	Croogo::hookHelper('Nodes', 'Event.Event');
 /**

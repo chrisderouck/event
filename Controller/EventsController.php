@@ -39,12 +39,11 @@ class EventsController extends EventAppController {
         // loading through node is done for new queries, to gain access to attached assets
         $this->Node->bindModel(
             array('hasOne' => array('Event')),
-            //array('hasMany' => array('Taxonomy')),
             false
         );
 
         if(Configure::read('Assets.installed')){
-            $this->Node->Behaviors->load('Assets.LinkedAssets');
+            Croogo::hookBehavior('Node', 'Assets.LinkedAssets');
         }
 
         if (CakePlugin::loaded('Taxonomy')) {
@@ -146,10 +145,33 @@ class EventsController extends EventAppController {
                         'Term',
                         'Vocabulary',
                     ),
-				    'User'));
+                    'User'));
         }
 
         $running_events = $this->Node->find('all', array('conditions'=>array('Node.status'=>1, 'Event.start_date <'=>date('Y-m-d H:i'), 'Event.end_date >'=>date('Y-m-d H:i'))));
+
+        // TODO : Move this containable behavior thing out of controller.
+        if(Configure::read('Assets.installed')) {
+            $this->Node->contain(
+                array(
+                    'Event',
+                    'AssetsAssetUsage' => 'AssetsAsset',
+                    'Taxonomy' => array(
+                        'Term',
+                        'Vocabulary',
+                    ),
+                    'User'));
+        }else{
+            $this->Node->contain(
+                array(
+                    'Event',
+                    'Taxonomy' => array(
+                        'Term',
+                        'Vocabulary',
+                    ),
+                    'User'));
+        }
+
         $future_events = $this->Node->find('all', array('conditions'=>array('Node.status'=>1, 'Event.start_date >'=>date('Y-m-d H:i'))));
 
         // API call from an element

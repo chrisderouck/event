@@ -1,6 +1,6 @@
 {
 	"name": "Event",
-	"description": "Event plugin for attaching event data to nodes and providing a calendar view",
+	"description": "Croogo Event Plugin",
 
 	"author": "Thomas Rader",
 	"authorEmail": "tom.rader@claritymediasolutions.com",

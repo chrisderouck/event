@@ -84,7 +84,7 @@ class EventHelper extends AppHelper {
 	        	From: '. $this->Time->i18nFormat($this->Layout->node['Event']['start_date'], Configure::read('Event.date_time_format')) .'<br />
 	        	To: '. $this->Time->i18nFormat($this->Layout->node['Event']['end_date'], Configure::read('Event.date_time_format')) . '<br />';
 
-            if (Configure::read('Event.show_organiser')){
+            if (Configure::read('Event.show_organiser') && isset($this->Layout->node['Event']['organiser'])){
                 $string .= 'Organiser: '. $this->Layout->node['Event']['organiser'];
             }
 
