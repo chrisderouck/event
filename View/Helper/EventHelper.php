@@ -80,10 +80,17 @@ class EventHelper extends AppHelper {
  */
     public function beforeNodeBody() {
 		if(count($this->Layout->node['Event']) > 0 && !empty($this->Layout->node['Event']['start_date']) && !empty($this->Layout->node['Event']['end_date'])){
-	        return '<div class="event-data">
+	        $string = '<div class="event-data">
 	        	From: '. $this->Time->i18nFormat($this->Layout->node['Event']['start_date'], Configure::read('Event.date_time_format')) .'<br />
-	        	To: '. $this->Time->i18nFormat($this->Layout->node['Event']['end_date'], Configure::read('Event.date_time_format')) .'
-	        </div>';
+	        	To: '. $this->Time->i18nFormat($this->Layout->node['Event']['end_date'], Configure::read('Event.date_time_format')) . '<br />';
+
+            if (Configure::read('Event.show_organiser')){
+                $string .= 'Organiser: '. $this->Layout->node['Event']['organiser'];
+            }
+
+	        $string .= '</div>';
+
+            return $string;
         }
     }
 /**

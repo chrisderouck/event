@@ -23,6 +23,7 @@ class EventsCreate extends CakeMigration {
 					'node_id' => array('type' => 'integer', 'null' => true, 'default' => NULL, 'length' => 10),
 					'start_date' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
 					'end_date' => array('type' => 'datetime', 'null' => true, 'default' => NULL),
+                    'organiser' => array('type' => 'string', 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'charset' => 'utf8'),
 					'indexes' => array(
 						'PRIMARY' => array('column' => 'id', 'unique' => 1),
 					),

@@ -20,7 +20,7 @@ if (count($events) > 0): ?>
                 </div>
 
                 <div class="calItemInfo">
-                    <div class="calItemInfoOrg"><?//=$event['Node']['creator']?></div>
+                    <div class="calItemInfoOrg"><?=$event['Event']['organiser']?></div>
                     <div class="calItemInfoAge">
                         <?php if(isset($event['Taxonomy']) && count($event['Taxonomy']) > 0): ?>
                             <?php foreach($event['Taxonomy'] as $taxo): ?>

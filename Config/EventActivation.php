@@ -16,7 +16,10 @@ class EventActivation {
 	}
 
 	public function onActivation(Controller $controller) {
+        App::uses('CroogoPlugin', 'Extensions.Lib');
         $CroogoPlugin = new CroogoPlugin();
+
+        // Migrate the database
         $CroogoPlugin->migrate('Event');
 
         // ACL: set ACOs with permissions
@@ -34,6 +37,7 @@ class EventActivation {
         $controller->Setting->write('Event.hold_my_ticket_api_key','',array('title' => 'Hold My Tickets API Key', 'description' => 'Fill in your HMT API Key if you choose yes above', 'editable' => 1));
         $controller->Setting->write('Event.oldest_year', date('Y'), array('title' => 'Oldest year to display', 'description'=> 'Till what year do we go back in time to show old events?', 'editable' => 1));
         $controller->Setting->write('Event.date_time_format', '%e %B %Y', array('title' => 'Date Time Format', 'description'=> 'How will we show date time?', 'editable' => 1));
+        $controller->Setting->write('Event.show_organiser', '1', array('title' => 'Do you want to choose and show an organiser?', 'description'=> 'If you want to choose an organiser, fill in `1`.', 'editable' => 1));
 
         // Create a block for upcoming events
         $controller->loadModel('Block');
@@ -57,6 +61,12 @@ class EventActivation {
 	}
 
 	public function onDeactivation(Controller $controller) {
+        App::uses('CroogoPlugin', 'Extensions.Lib');
+        $CroogoPlugin = new CroogoPlugin();
+
+        // Unmigrate the database, uncomment this if you want to drop the database at deactivation, data will be lost.
+        // $CroogoPlugin->unmigrate('Event');
+
         // Clear ACO
         $controller->Croogo->removeAco('Event');
 

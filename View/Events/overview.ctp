@@ -7,7 +7,7 @@
     <h1>Evenementen in de toekomst</h1>
     <?=$this->element('event_articles', array('events' => $future_events));?>
 <?php else: ?>
-    <p>Er zijn geen evenemenen meer gepland in de toekomst.<?=$year?></p>
+    <p>Er zijn geen evenemenen meer gepland in de toekomst.</p>
 <?php endif; ?>
 
 <br>
