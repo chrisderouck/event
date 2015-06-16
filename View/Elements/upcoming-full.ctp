@@ -21,7 +21,20 @@ if (count($events) > 0): ?>
 
                 <div class="calItemInfo">
                     <div class="calItemInfoOrg"><?//=$event['Node']['creator']?></div>
-                    <div class="calItemInfoAge">Fuif, 16+</div>
+                    <div class="calItemInfoAge">
+                        <?php if(isset($event['Taxonomy']) && count($event['Taxonomy']) > 0): ?>
+                            <?php foreach($event['Taxonomy'] as $taxo): ?>
+                                <?=$this->Html->link($taxo['Term']['title'], array(
+                                    'admin' => false,
+                                    'plugin' => 'nodes',
+                                    'controller' => 'nodes',
+                                    'action' => 'term',
+                                    'type' => $taxo['Vocabulary']['alias'],
+                                    'slug' => $taxo['Term']['slug']
+                                ));?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </a>
         </article>

@@ -25,25 +25,30 @@ class EventsController extends EventAppController {
  * @var array
  * @access public
  */
-    public $uses = array('Event','Node');
+    public $uses = array('Event','Nodes.Node');
 
     public function beforeFilter(){
     	parent::beforeFilter();
 
         // still in use for the older queries
     	$this->Event->bindModel(
-        	array('belongsTo'=>array('Node')),
+        	array('belongsTo' => array('Node')),
         	false
        	);
 
         // loading through node is done for new queries, to gain access to attached assets
         $this->Node->bindModel(
-            array('hasOne'=>array('Event')),
+            array('hasOne' => array('Event')),
+            //array('hasMany' => array('Taxonomy')),
             false
         );
 
         if(Configure::read('Assets.installed')){
             $this->Node->Behaviors->load('Assets.LinkedAssets');
+        }
+
+        if (CakePlugin::loaded('Taxonomy')) {
+            Croogo::hookBehavior('Node', 'Taxonomy.Taxonomizable');
         }
     }
 
@@ -124,7 +129,24 @@ class EventsController extends EventAppController {
 
     public function overview(){
         if(Configure::read('Assets.installed')) {
-            $this->Node->contain(array('Event', 'AssetsAssetUsage' => 'AssetsAsset'));
+            $this->Node->contain(
+                array(
+                    'Event',
+                    'AssetsAssetUsage' => 'AssetsAsset',
+                    'Taxonomy' => array(
+                        'Term',
+                        'Vocabulary',
+                    ),
+                    'User'));
+        }else{
+            $this->Node->contain(
+                array(
+                    'Event',
+                    'Taxonomy' => array(
+                        'Term',
+                        'Vocabulary',
+                    ),
+				    'User'));
         }
 
         $running_events = $this->Node->find('all', array('conditions'=>array('Node.status'=>1, 'Event.start_date <'=>date('Y-m-d H:i'), 'Event.end_date >'=>date('Y-m-d H:i'))));
@@ -138,7 +160,7 @@ class EventsController extends EventAppController {
         $this->set('running_events', $running_events);
         $this->set('future_events', $future_events);
 
-        if(Configure::read('Event.oldest_year') == date('Y')){
+        if(Configure::read('Event.oldest_year') >= date('Y')){
             $this->set('no_older_events', true);
         }
     }
@@ -149,7 +171,24 @@ class EventsController extends EventAppController {
         }
 
         if(Configure::read('Assets.installed')) {
-            $this->Node->contain(array('Event', 'AssetsAssetUsage' => 'AssetsAsset'));
+            $this->Node->contain(
+                array(
+                    'Event',
+                    'AssetsAssetUsage' => 'AssetsAsset',
+                    'Taxonomy' => array(
+                        'Term',
+                        'Vocabulary',
+                    ),
+                    'User'));
+        }else{
+            $this->Node->contain(
+                array(
+                    'Event',
+                    'Taxonomy' => array(
+                        'Term',
+                        'Vocabulary',
+                    ),
+                    'User'));
         }
 
         $events = $this->Node->find('all', array('conditions'=>array('Node.status'=>1, 'Event.end_date <'=>date('Y-m-d H:i'), 'YEAR(Event.end_date) >' => $year -1)));

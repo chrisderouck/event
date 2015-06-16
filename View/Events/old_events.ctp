@@ -1,12 +1,6 @@
 <?php if (count($events) > 0): ?>
     <h1>Gepasseerde evenementen in <?=$year?></h1>
-    <?php foreach($events as $event): ?>
-        <article>
-            <?=$this->Html->link($event['Node']['title'], $event['Node']['path'])?>
-
-            <?=$event['Node']['body']?>
-        </article>
-    <?php endforeach; ?>
+    <?=$this->element('event_articles', array('events' => $events));?>
 <?php else: ?>
     <p>Er zijn geen evenemenen gepasseerd in <?=$year?></p>
 <?php endif; ?>
