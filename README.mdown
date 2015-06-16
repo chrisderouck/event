@@ -21,6 +21,8 @@ It is powered by [CakePHP](http://cakephp.org) MVC framework.
   * Extract the archive. Upload the content to your Croogo installation in the ./app/Plugins/Event directory.
   `# git clone https://github.com/thoth/event.git ./app/Plugin/Event`
   * visit Croogo's extension system to "activate" the plugin.
+  * Add the AdminExtras theme and set it up using your croogo settings Site.admin_theme to have a uniform calendar over croogo
+  * Optionally install the Croogo Assets plugin (https://github.com/xintesa/Assets) to add assets to your event
 
 ## Usage
 
@@ -28,9 +30,12 @@ It is powered by [CakePHP](http://cakephp.org) MVC framework.
   * Add a start (and end date if appropriate; otherwise leave blank)
   * Save as normal
   * Event will appear by default on a calendar at //your-site.com/events
+  * Alternatively upcoming and old events will respectively be shown in a listview at //your-site.com/events/overview and //your-site.com/events/old_events
   * Event data will also prepend using the beforeNodeBody() function in the helper
   * You can also access a list of upcoming events by splicing the following into textareas that accept it (e.g. Node.body and Block.body)
-  `[e:upcoming plugin="Event"]`
+  `[e:upcoming plugin="Event"]` as Node.body does not seem to accept an element right now, a block will be created on activation which can be used in Node.body [b:upcoming-events]
+   You can obviously alter the block to use the upcoming-full element instead of the upcoming element.
+  * If you've installed the optional assets plugin as well, then you can select a FeaturedImage for your events which will be displayed nicely in the list view
 
 ## Links
 
