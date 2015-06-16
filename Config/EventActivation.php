@@ -16,33 +16,65 @@ class EventActivation {
 	}
 
 	public function onActivation(Controller $controller) {
+        $CroogoPlugin = new CroogoPlugin();
+        $CroogoPlugin->migrate('Event');
 
-       // ACL: set ACOs with permissions
-        $controller->Croogo->addAco('Event'); // ExampleController
-        $controller->Croogo->addAco('Event/Events/admin_index'); // ExampleController::admin_index()
-        $controller->Croogo->addAco('Event/Events/index', array('registered', 'public')); // ExampleController::index()
-        $controller->Croogo->addAco('Event/Events/view', array('registered', 'public')); // ExampleController::index()
-        $controller->Croogo->addAco('Event/Events/calendar', array('registered', 'public')); // ExampleController::index()
+        // ACL: set ACOs with permissions
+        $controller->Croogo->addAco('Event');
+        $controller->Croogo->addAco('Event/Events/admin_index');
+        $controller->Croogo->addAco('Event/Events/index', array('registered', 'public'));
+        $controller->Croogo->addAco('Event/Events/view', array('registered', 'public'));
+        $controller->Croogo->addAco('Event/Events/calendar', array('registered', 'public'));
+        $controller->Croogo->addAco('Event/Events/upcoming', array('registered', 'public'));
+        $controller->Croogo->addAco('Event/Events/overview', array('registered', 'public'));
+        $controller->Croogo->addAco('Event/Events/old_events', array('registered', 'public'));
 
-		App::uses('CroogoPlugin', 'Extensions.Lib');
-		$CroogoPlugin = new CroogoPlugin();
-		$CroogoPlugin->migrate('Event');
+        // Add settings to the system
+        $controller->Setting->write('Event.use_hold_my_ticket','no',array('title' => 'Use Hold My Tickets API', 'description' => 'Fill in "yes" if you wish to use the HMT service', 'editable' => 1));
+        $controller->Setting->write('Event.hold_my_ticket_api_key','',array('title' => 'Hold My Tickets API Key', 'description' => 'Fill in your HMT API Key if you choose yes above', 'editable' => 1));
+        $controller->Setting->write('Event.oldest_year', date('Y'), array('title' => 'Oldest year to display', 'description'=> 'Till what year do we go back in time to show old events?', 'editable' => 1));
+        $controller->Setting->write('Event.date_time_format', '%e %B %Y', array('title' => 'Date Time Format', 'description'=> 'How will we show date time?', 'editable' => 1));
 
-		//Ignore the cache since the tables wont be inside the cache at this point
-		//$db->cacheSources = false;
-
-
-		$controller->Setting->write('Event.use_hold_my_ticket','yes',array('description' => 'Use Hold My Tickets','editable' => 1));
-        $controller->Setting->write('Event.hold_my_ticket_api_key','',array('description' => 'Hold My Tickets API Key','editable' => 1));
-
-	}
+        // Create a block for upcoming events
+        $controller->loadModel('Block');
+        $result = $controller->Block->save(array(
+            'Block' => array(
+                'id' => '',
+                'region_id' => '4',
+                'title' => 'Upcoming events',
+                'alias' => 'upcoming-events',
+                'body' => '[element:upcoming plugin="Event"]',
+                'show_title' => '0',
+                'status' => '1',
+                'class' => '',
+                'element' => ''
+            )
+        ));
+    }
 
 	public function beforeDeactivation(Controller $controller) {
 		return true;
 	}
 
 	public function onDeactivation(Controller $controller) {
-		$controller->Croogo->removeAco('Event');
+        // Clear ACO
+        $controller->Croogo->removeAco('Event');
+
+        // Remove setting variables
+        $controller->Setting->deleteKey('Event.use_hold_my_ticket');
+        $controller->Setting->deleteKey('Event.hold_my_ticket_api_key');
+        $controller->Setting->deleteKey('Event.oldest_year');
+        $controller->Setting->deleteKey('Event.date_time_format');
+
+        // Remove block for upcoming events
+        $controller->loadModel('Block');
+        $block = $controller->Block->findByAlias('upcoming-events');
+
+        if($block){
+            if(! $controller->Block->delete($block['Block']['id'])) {
+                return false;
+            }
+        }
 	}
 
  }

@@ -21,6 +21,7 @@ class EventHelper extends AppHelper {
     public $helpers = array(
         'Html',
         'Layout',
+        'Time'
     );
 /**
  * Before render callback. Called before the view file is rendered.
@@ -80,8 +81,8 @@ class EventHelper extends AppHelper {
     public function beforeNodeBody() {
 		if(count($this->Layout->node['Event']) > 0 && !empty($this->Layout->node['Event']['start_date']) && !empty($this->Layout->node['Event']['end_date'])){
 	        return '<div class="event-data">
-	        	From: '.date(Configure::read('Reading.date_time_format'), strtotime($this->Layout->node['Event']['start_date'])).'<br />
-	        	To: '.date(Configure::read('Reading.date_time_format'), strtotime($this->Layout->node['Event']['end_date'])).'
+	        	From: '. $this->Time->i18nFormat($this->Layout->node['Event']['start_date'], Configure::read('Event.date_time_format')) .'<br />
+	        	To: '. $this->Time->i18nFormat($this->Layout->node['Event']['end_date'], Configure::read('Event.date_time_format')) .'
 	        </div>';
         }
     }

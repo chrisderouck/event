@@ -25,15 +25,26 @@ class EventsController extends EventAppController {
  * @var array
  * @access public
  */
+    public $uses = array('Event','Node');
 
     public function beforeFilter(){
     	parent::beforeFilter();
 
+        // still in use for the older queries
     	$this->Event->bindModel(
         	array('belongsTo'=>array('Node')),
         	false
        	);
 
+        // loading through node is done for new queries, to gain access to attached assets
+        $this->Node->bindModel(
+            array('hasOne'=>array('Event')),
+            false
+        );
+
+        if(Configure::read('Assets.installed')){
+            $this->Node->Behaviors->load('Assets.LinkedAssets');
+        }
     }
 
     public function index(){
@@ -41,7 +52,6 @@ class EventsController extends EventAppController {
     }
 
 	public function hmtview($id = -1){
-
 		$event = array();
 		if(strtolower(Configure::read('Event.use_hold_my_ticket')) == 'yes'){
 			$this->loadModel('Event.HoldMyTicket');
@@ -103,7 +113,58 @@ class EventsController extends EventAppController {
 
 		$this->autoLayout = false;
 		$this->autoRender = false;
-		return($events);
+
+        // not an API call from an element
+        if (! isset($this->request->params['requested'])) {
+            $this->redirect(array('action' => 'overview'));
+        }
+
+        return $events;
+    }
+
+    public function overview(){
+        if(Configure::read('Assets.installed')) {
+            $this->Node->contain(array('Event', 'AssetsAssetUsage' => 'AssetsAsset'));
+        }
+
+        $running_events = $this->Node->find('all', array('conditions'=>array('Node.status'=>1, 'Event.start_date <'=>date('Y-m-d H:i'), 'Event.end_date >'=>date('Y-m-d H:i'))));
+        $future_events = $this->Node->find('all', array('conditions'=>array('Node.status'=>1, 'Event.start_date >'=>date('Y-m-d H:i'))));
+
+        // API call from an element
+        if (isset($this->request->params['requested'])) {
+            return $future_events;
+        }
+
+        $this->set('running_events', $running_events);
+        $this->set('future_events', $future_events);
+
+        if(Configure::read('Event.oldest_year') == date('Y')){
+            $this->set('no_older_events', true);
+        }
+    }
+
+    public function old_events($year = null){
+        if (!$year){
+            $year = date('Y');
+        }
+
+        if(Configure::read('Assets.installed')) {
+            $this->Node->contain(array('Event', 'AssetsAssetUsage' => 'AssetsAsset'));
+        }
+
+        $events = $this->Node->find('all', array('conditions'=>array('Node.status'=>1, 'Event.end_date <'=>date('Y-m-d H:i'), 'YEAR(Event.end_date) >' => $year -1)));
+
+        $this->set('year', $year);
+        $this->set('events', $events);
+
+        if(Configure::read('Event.oldest_year') == $year){
+            $this->set('no_older_events', true);
+        }
+
+        if($year == date('Y')){
+            // we don't want a button for the next year, only the button to go to current events which we show all the time.
+            $this->set('no_newer_events', true);
+        }
     }
 
 }
