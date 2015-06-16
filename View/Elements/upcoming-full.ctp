@@ -3,7 +3,7 @@ $events = $this->requestAction(array('plugin'=>'event', 'controller'=>'events', 
 
 if (count($events) > 0): ?>
     <div id="kalender">
-        <h2>Jeugdkalender</h2>
+        <h2><?=__('Quick Calendar')?></h2>
 
     <?php foreach($events as $event): ?>
         <article class="calItem">
@@ -15,13 +15,13 @@ if (count($events) > 0): ?>
                 <?php if(isset($event['LinkedAssets']) && isset($event['LinkedAssets']['FeaturedImage'])): ?>
                     <?=$this->Html->image(str_replace('\\','/',$event['LinkedAssets']['FeaturedImage']['path']))?>
                 <?php else: ?>
-                    <?php echo $this->Html->image('foto1.jpg', $options = array('alt' => 'Default Kalender Afbeelding Jeugd Wetteren')); ?>
+                    <?php echo $this->Html->image('default.jpg', $options = array('alt' => 'Default Calendar Image')); ?>
                 <?php endif; ?>
                 </div>
 
                 <div class="calItemInfo">
                     <div class="calItemInfoOrg"><?=$event['Event']['organiser']?></div>
-                    <div class="calItemInfoAge">
+                    <div class="calItemInfoTags">
                         <?php if(isset($event['Taxonomy']) && count($event['Taxonomy']) > 0): ?>
                             <?php foreach($event['Taxonomy'] as $taxo): ?>
                                 <?=$this->Html->link($taxo['Term']['title'], array(
@@ -40,7 +40,7 @@ if (count($events) > 0): ?>
         </article>
     <?php endforeach; ?>
 
-        <a href="#" class="btn"><span></span>Volledige kalender</a>
+        <a href="#" class="btn"><span></span><?=('Full Calendar')?></a>
         <div class="cleaner"></div>
     </div>
 <?php endif; ?>
