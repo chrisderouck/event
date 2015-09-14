@@ -1,0 +1,123 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: Vendor/croogo/croogo/Blocks/Model/Block.php:validation for field title
+#: Vendor/croogo/croogo/Blocks/Model/Region.php:validation for field title
+#: Vendor/croogo/croogo/Menus/Model/Link.php:validation for field title
+#: Vendor/croogo/croogo/Menus/Model/Menu.php:validation for field title
+#: Vendor/croogo/croogo/Settings/Model/Language.php:validation for field title
+#: Vendor/croogo/croogo/Taxonomy/Model/Type.php:validation for field title
+#: Vendor/croogo/croogo/Taxonomy/Model/Vocabulary.php:validation for field title
+msgid "Title cannot be empty."
+msgstr ""
+
+#: Vendor/croogo/croogo/Blocks/Model/Block.php:validation for field alias
+#: Vendor/croogo/croogo/Blocks/Model/Region.php:validation for field alias
+#: Vendor/croogo/croogo/Contacts/Model/Contact.php:validation for field alias
+#: Vendor/croogo/croogo/Menus/Model/Menu.php:validation for field alias
+#: Vendor/croogo/croogo/Settings/Model/Language.php:validation for field alias
+#: Vendor/croogo/croogo/Taxonomy/Model/Type.php:validation for field alias
+#: Vendor/croogo/croogo/Taxonomy/Model/Vocabulary.php:validation for field alias
+#: Vendor/croogo/croogo/Users/Model/Role.php:validation for field alias
+msgid "This alias has already been taken."
+msgstr ""
+
+#: Vendor/croogo/croogo/Blocks/Model/Block.php:validation for field alias
+#: Vendor/croogo/croogo/Blocks/Model/Region.php:validation for field alias
+#: Vendor/croogo/croogo/Contacts/Model/Contact.php:validation for field alias
+#: Vendor/croogo/croogo/Menus/Model/Menu.php:validation for field alias
+#: Vendor/croogo/croogo/Settings/Model/Language.php:validation for field alias
+#: Vendor/croogo/croogo/Taxonomy/Model/Type.php:validation for field alias
+#: Vendor/croogo/croogo/Taxonomy/Model/Vocabulary.php:validation for field alias
+#: Vendor/croogo/croogo/Users/Model/Role.php:validation for field title;validation for field alias
+msgid "Alias cannot be empty."
+msgstr ""
+
+#: Vendor/croogo/croogo/Comments/Model/Comment.php:validation for field body;validation for field name
+#: Vendor/croogo/croogo/Contacts/Model/Contact.php:validation for field title
+#: Vendor/croogo/croogo/Contacts/Model/Message.php:validation for field name;validation for field title;validation for field body
+#: Vendor/croogo/croogo/FileManager/Model/Attachment.php:validation for field title
+#: Vendor/croogo/croogo/Nodes/Model/Node.php:validation for field title
+#: Vendor/croogo/croogo/Users/Model/User.php:validation for field username;validation for field name
+msgid "This field cannot be left blank."
+msgstr ""
+
+#: Vendor/croogo/croogo/Comments/Model/Comment.php:validation for field email
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: Vendor/croogo/croogo/Contacts/Model/Contact.php:validation for field email
+#: Vendor/croogo/croogo/Contacts/Model/Message.php:validation for field email
+#: Vendor/croogo/croogo/Users/Model/User.php:validation for field email
+msgid "Please provide a valid email address."
+msgstr ""
+
+#: Vendor/croogo/croogo/FileManager/Model/Attachment.php:validation for field slug
+#: Vendor/croogo/croogo/Nodes/Model/Node.php:validation for field slug
+#: Vendor/croogo/croogo/Taxonomy/Model/Term.php:validation for field slug
+msgid "This slug has already been taken."
+msgstr ""
+
+#: Vendor/croogo/croogo/FileManager/Model/Attachment.php:validation for field slug
+#: Vendor/croogo/croogo/Nodes/Model/Node.php:validation for field slug
+#: Vendor/croogo/croogo/Taxonomy/Model/Term.php:validation for field slug
+msgid "Slug cannot be empty."
+msgstr ""
+
+#: Plugin/Gallery/Model/Album.php:validation for field slug
+msgid "Slug is already in use."
+msgstr ""
+
+#: Plugin/Gallery/Model/Album.php:validation for field slug
+msgid "notEmpty"
+msgstr ""
+
+#: Vendor/croogo/croogo/Menus/Model/Link.php:validation for field link
+msgid "Link cannot be empty."
+msgstr ""
+
+#: Plugin/Realisations/Model/Category.php:validation for field naam
+msgid "Gelieve een naam in te vullen."
+msgstr ""
+
+#: Vendor/croogo/croogo/Settings/Model/Setting.php:validation for field key
+msgid "This key has already been taken."
+msgstr ""
+
+#: Vendor/croogo/croogo/Settings/Model/Setting.php:validation for field key
+msgid "Key cannot be empty."
+msgstr ""
+
+#: Vendor/croogo/croogo/Users/Model/Role.php:validation for field title;validation for field alias
+#: Vendor/croogo/croogo/Users/Model/User.php:validation for field username;validation for field name
+msgid "This field must be alphanumeric"
+msgstr ""
+
+#: Vendor/croogo/croogo/Users/Model/User.php:validation for field username
+msgid "The username has already been taken."
+msgstr ""
+
+#: Vendor/croogo/croogo/Users/Model/User.php:validation for field email
+msgid "Email address already in use."
+msgstr ""
+
+#: Vendor/croogo/croogo/Users/Model/User.php:validation for field password
+msgid "Passwords must be at least 6 characters long."
+msgstr ""
+
+#: Vendor/croogo/croogo/Users/Model/User.php:validation for field website
+msgid "This field must be a valid URL"
+msgstr ""
+

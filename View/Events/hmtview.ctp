@@ -3,12 +3,12 @@
 	<div class="body">
 		<h1><?php echo $event['Event']['name']; ?></h1>
 		<dl><?php $i = 0; $class = ' class="altrow"';?>
-			<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Details'); ?></dt>
+			<dt<?php if ($i % 2 == 0) echo $class;?>><?php __d('event', 'Details'); ?></dt>
 			<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 				<?php echo $event['Event']['description']; ?>
 				&nbsp;
 			</dd>
-			<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Location'); ?></dt>
+			<dt<?php if ($i % 2 == 0) echo $class;?>><?php __d('event', 'Location'); ?></dt>
 			<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 				<?php echo $event['Event']['venue_name']; ?>
 				&nbsp;
@@ -39,12 +39,12 @@
 				<?php echo $event['Event']['venue_phone']; ?>
 				&nbsp;
 			</dd>
-			<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Start'); ?></dt>
+			<dt<?php if ($i % 2 == 0) echo $class;?>><?php __d('event', 'Start'); ?></dt>
 			<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 				<?php echo date('F jS, Y \a\t g:ia', strtotime($event['Event']['start'])); ?>
 				&nbsp;
 			</dd>
-			<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('End'); ?></dt>
+			<dt<?php if ($i % 2 == 0) echo $class;?>><?php __d('event', 'End'); ?></dt>
 			<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 				<?php echo date('F jS, Y \a\t g:ia', strtotime($event['Event']['end']));  ?>
 				&nbsp;

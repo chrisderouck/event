@@ -75,6 +75,7 @@ class EventActivation {
         $controller->Setting->deleteKey('Event.hold_my_ticket_api_key');
         $controller->Setting->deleteKey('Event.oldest_year');
         $controller->Setting->deleteKey('Event.date_time_format');
+//TODO: add settings time format and date format
 
         // Remove block for upcoming events
         $controller->loadModel('Block');

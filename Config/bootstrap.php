@@ -26,6 +26,8 @@
  * This plugin's EventHelper will be loaded via NodesController.
  */
 	Croogo::hookHelper('Nodes', 'Event.Event');
+    // It will be attached to itself as well.
+    Croogo::hookHelper('Events', 'Event.Event');
 /**
  * Admin menu (navigation)
  *

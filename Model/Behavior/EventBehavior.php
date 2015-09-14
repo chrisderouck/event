@@ -37,7 +37,12 @@ class EventBehavior extends ModelBehavior {
 
     }
 
-    /**
+    public function beforeFind(Model $model, $query)
+    {
+        //var_dump($query);
+        return $query;
+    }
+        /**
      * After find callback
      *
      * @param object $model
@@ -63,8 +68,27 @@ class EventBehavior extends ModelBehavior {
                     }
             }
 
-            return $results;
+            // If we are looking at an event page? is this best way to find out?
+            if (count($results) > 0) {
+                $allNodesAreEvents = true;
+                foreach ($results as $r) {
+                    // TODO: Should come somewhere from database which types are event
+                    if(! isset($r['Node']) || ! isset($r['Node']['type']) || $r['Node']['type'] === 'kalender' || $r['Node']['type'] === 'event'){
+                        $allNodesAreEvents = false;
+                        break;
+                    };
+                }
 
+//echo                $allNodesAreEvents;
+                if($allNodesAreEvents){
+                    //echo "allnodes are events";
+                    usort($results, function($a, $b){
+                        return $a['Event']['start_date'] > $b['Event']['start_date'];
+                    });
+                }
+            }
+
+            return $results;
     }
 
     /**
